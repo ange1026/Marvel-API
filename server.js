@@ -86,6 +86,16 @@ app.post('/marvel', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// UPDATE -> PUT
+app.put('/marvel/:id', (req, res) => {
+    const id = req.params.id
+    Marvel.findByIdAndUpdate(id, req.body, {new: true })
+    .then(marvel => {
+        console.log('the new marvel update', marvel)
+        res.sendStatus(204)
+    })
+})
+
 // Server Listener
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Listening to port: ${PORT}`))
