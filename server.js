@@ -96,6 +96,16 @@ app.put('/marvel/:id', (req, res) => {
     })
 })
 
+// DELETE -> DELETE
+app.delete('/marvel/:id', (req, res) => {
+    const id = req.params.id
+    Marvel.findByIdAndRemove(id)
+    .then(marvel => {
+        res.sendStatus(204)
+    })
+    .catch(err => res.json(err))
+})
+
 // Server Listener
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Listening to port: ${PORT}`))
