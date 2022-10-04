@@ -1,11 +1,14 @@
+// Dependencies
 require("dotenv").config() 
 const express = require("express") 
 const morgan = require("morgan") 
 const mongoose = require("mongoose") 
 const path = require("path") 
 
+// Models
 const Marvel = require('./models/marvel.js')
 
+// Database Connection
 const DATABASE_URL = process.env.DATABASE_URL
 
 const CONFIG = {
@@ -13,21 +16,25 @@ const CONFIG = {
     useUnifiedTopology: true
 }
 
+// Establish connection
 mongoose.connect(DATABASE_URL, CONFIG)
 
+// Mongoose
 mongoose.connection
     .on("open", () => console.log("Connected to Mongoose"))
     .on("close", () => console.log("Disconnected from Mongoose"))
     .on("error", (error) => console.log("An error occurred: \n", error))
 
+// Express Application Object
 const app = express()
 
+// Middleware
 app.use(morgan("tiny")) 
 app.use(express.urlencoded({ extended: true })) 
 app.use(express.static("public")) 
 app.use(express.json()) 
 
-
+// ROUTES
 app.get('/', (req, res) => {
     res.send('Server is running')
 })
@@ -60,6 +67,17 @@ app.get('/marvel', (req, res) => {
       .catch(err => console.log(err))
 })
 
+// SHOW
+app.get('/marvel/:id', (req, res) => {
+    const id = req.params.id
+    Marvel.findById(id)
+    .then(marvel => {
+        res.json({ marvel: marvel})
+    })
+    .catch(err => console.log(err))
+})
 
+
+// Server Listener
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Listening to port: ${PORT}`))
