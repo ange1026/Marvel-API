@@ -32,6 +32,34 @@ app.get('/', (req, res) => {
     res.send('Server is running')
 })
 
+// Seed route
+app.get('/marvel/heroes', (req, res) => {
+    const marvelMovies = [
+        {actor: 'Tom Holland', heroName: 'Spider-Man', heroAlive: true, movies: 3},
+        {actor: 'Chris Evans', heroName: 'Captain America', heroAlive: true, movies: 3},
+        {actor: 'Scarlett Johansson', heroName: 'Black Widow', heroAlive: false, movies: 1},
+        {actor: 'Robert Downey Jr', heroName: 'Iron-Man', heroAlive: false, movies: 3},
+        {actor: 'Chris Hemsworth', heroName: 'Thor', heroAlive: true, movies: 4}
+    ]
+
+    Marvel.deleteMany({})
+    .then(() => {
+        Marvel.create(marvelMovies)
+         .then(data => {
+            res.json(data)
+         })
+    })
+})
+
+// INDEX
+app.get('/marvel', (req, res) => {
+    Marvel.find({})
+      .then(marvel => {
+        res.json({marvel: marvel})
+      })
+      .catch(err => console.log(err))
+})
+
 
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Listening to port: ${PORT}`))
