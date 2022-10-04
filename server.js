@@ -58,7 +58,7 @@ app.get('/marvel/heroes', (req, res) => {
     })
 })
 
-// INDEX
+// INDEX -> GET
 app.get('/marvel', (req, res) => {
     Marvel.find({})
       .then(marvel => {
@@ -67,7 +67,7 @@ app.get('/marvel', (req, res) => {
       .catch(err => console.log(err))
 })
 
-// SHOW
+// SHOW -> GET
 app.get('/marvel/:id', (req, res) => {
     const id = req.params.id
     Marvel.findById(id)
@@ -77,6 +77,14 @@ app.get('/marvel/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
+// CREATE -> POST
+app.post('/marvel', (req, res) => {
+    Marvel.create(req.body)
+    .then(marvel => {
+        res.status(201).json({ marvel: marvel.toObject() })
+    })
+    .catch(error => console.log(error))
+})
 
 // Server Listener
 const PORT = process.env.PORT
