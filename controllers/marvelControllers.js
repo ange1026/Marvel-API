@@ -1,6 +1,7 @@
 // Dependencies
 const express = require('express')
 const Marvel = require('../models/marvel')
+const { populate } = require('../models/user')
 
 // Create Route
 const router = express.Router()
@@ -16,8 +17,9 @@ const router = express.Router()
 
 
 // INDEX -> GET
-router.get('/marvel', (req, res) => {
+router.get('/', (req, res) => {
     Marvel.find({})
+    .populate('comments.author', 'username')
       .then(marvel => {
         res.json({marvel: marvel})
       })
@@ -25,9 +27,11 @@ router.get('/marvel', (req, res) => {
 })
 
 // SHOW -> GET
-router.get('/marvel/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const id = req.params.id
+
     Marvel.findById(id)
+    .populate('comments.author', 'username')
     .then(marvel => {
         res.json({ marvel: marvel})
     })
@@ -35,26 +39,35 @@ router.get('/marvel/:id', (req, res) => {
 })
 
 // CREATE -> POST
-router.post('/marvel', (req, res) => {
+router.post('/', (req, res) => {
+
+    req.body.owner = req.session.userId
     Marvel.create(req.body)
     .then(marvel => {
         res.status(201).json({ marvel: marvel.toObject() })
     })
-    .catch(error => console.log(error))
+    .catch(error => res.json(error))
 })
 
 // UPDATE -> PUT
-router.put('/marvel/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const id = req.params.id
-    Marvel.findByIdAndUpdate(id, req.body, {new: true })
+
+    Marvel.findById(id)
     .then(marvel => {
-        console.log('the new marvel update', marvel)
-        res.sendStatus(204)
+
+        if (marvel.owner == req.session.userId) {
+            res.sendStatus(204)
+            return marvel.updateOne(req.body)
+        } else {
+            res.sendStatus(401)
+        }
     })
+    .catch(error => res.json(error))
 })
 
 // DELETE -> DELETE
-router.delete('/marvel/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const id = req.params.id
     Marvel.findByIdAndRemove(id)
     .then(marvel => {

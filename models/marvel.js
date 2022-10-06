@@ -1,3 +1,5 @@
+
+// Import Dependencies
 const mongoose = require("mongoose")
 const User = require('./user')
 
@@ -7,7 +9,7 @@ const commentSchema = require('./comment')
 // Schema and model from mongoose
 const { Schema, model } = mongoose
 
-// marvel Schema
+// Marvel Schema
 const marvelSchema = new Schema({
     actor: String,
     heroName: String,
@@ -24,5 +26,5 @@ const marvelSchema = new Schema({
 // Model method
 const Marvel = model('Marvel', marvelSchema)
 
-// model export
+// Model export
 module.exports = Marvel
