@@ -11,7 +11,7 @@ const { Schema, model } = mongoose
 
 // Marvel Schema
 const marvelSchema = new Schema({
-    actor: String,
+    character: String,
     heroName: String,
     heroAlive: Boolean,
     movies: Number,

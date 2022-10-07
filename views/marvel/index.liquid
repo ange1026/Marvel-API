@@ -1,0 +1,37 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+  <div>
+    <h2 class="dsiplay-6">All Characters</h2>
+    <div class="row">
+      {% for marvel in marvel %}
+        <div class="card">
+          <h5 class="card-header">{{ marvel.character }}
+          </h5>
+          <div class="card-body">
+            <h5 class="card-title">
+              {% if marvel.heroAlive %}
+                Alive
+              {% else %}
+                RIP
+              {% endif %}
+            </h5>
+            <p class="card-text">The hero name of {{ marvel.character }} 
+              is
+              {{marvel.heroName}}
+            </p>
+            <p class="card-text">The number of solo movies of this character:
+              is
+              {{marvel.movies}}
+            </p>
+            <a class="btn btn-info" href="/marvel/{{marvel.id}}">
+              View
+              {{marvel.character}}
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

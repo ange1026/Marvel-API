@@ -7,16 +7,16 @@ const db = mongoose.connection
 
 db.on('open', () => {
     const marvelMovies = [
-        {actor: 'Tom Holland', heroName: 'Spider-Man', heroAlive: true, movies: 3},
-        {actor: 'Chris Evans', heroName: 'Captain America', heroAlive: true, movies: 3},
-        {actor: 'Scarlett Johansson', heroName: 'Black Widow', heroAlive: false, movies: 1},
-        {actor: 'Robert Downey Jr', heroName: 'Iron-Man', heroAlive: false, movies: 3},
-        {actor: 'Chris Hemsworth', heroName: 'Thor', heroAlive: true, movies: 4}
+        {character: 'Peter Parker', heroName: 'Spider-Man', heroAlive: true, movies: 3},
+        {character: 'Steve Rogers', heroName: 'Captain America', heroAlive: true, movies: 3},
+        {character: 'Natasha Romanoff', heroName: 'Black Widow', heroAlive: false, movies: 1},
+        {character: 'Tony Stark', heroName: 'Iron-Man', heroAlive: false, movies: 3},
+        {character: 'Thor Odinson', heroName: 'Thor', heroAlive: true, movies: 4}
     ]
 
     Marvel.remove({})
-      .then(deletedActors => {
-        console.log('.remove returns:', deletedActors)
+      .then(deletedCharacters => {
+        console.log('.remove returns:', deletedCharacters)
 
         Marvel.create(marvelMovies)
         .then(data => {

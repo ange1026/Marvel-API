@@ -6,22 +6,16 @@ const { populate } = require('../models/user')
 // Create Route
 const router = express.Router()
 
-
-// const marvelMovies = [
-//     {actor: 'Tom Holland', heroName: 'Spider-Man', heroAlive: true, movies: 3},
-//     {actor: 'Chris Evans', heroName: 'Captain America', heroAlive: true, movies: 3},
-//     {actor: 'Scarlett Johansson', heroName: 'Black Widow', heroAlive: false, movies: 1},
-//     {actor: 'Robert Downey Jr', heroName: 'Iron-Man', heroAlive: false, movies: 3},
-//     {actor: 'Chris Hemsworth', heroName: 'Thor', heroAlive: true, movies: 4}
-// ]
-
-
 // INDEX -> GET
 router.get('/', (req, res) => {
     Marvel.find({})
     .populate('comments.author', 'username')
       .then(marvel => {
-        res.json({marvel: marvel})
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        const userId = req.session.userId
+
+        res.render('marvel/index', { marvel, username, loggedIn, userId })
       })
       .catch(err => console.log(err))
 })
