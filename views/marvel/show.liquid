@@ -1,0 +1,29 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="container-md">
+    <article>
+      <h2>{{ marvel.character }}
+      </h2>
+      <h4>
+        {% if marvel.heroAlive %}
+          Alive
+        {% else %}
+          RIP
+        {% endif %}
+      </h4>
+      <h4>The hero name of this character is:
+        {{ marvel.heroName }}
+      </h4>
+      <h4>The number of solo movies of this character is: {{ marvel.movies }}</h4>
+      {% if marvel.owner == userId %}
+        <div class="btn-group">
+          <a class="btn btn-primary" href="/marvel/edit/{{marvel.id}}">Edit</a>
+          <form action= "/marvel/{{marvel.id}}?_method=DELETE" method="POST">
+            <input class="btn btn-danger" type="submit" value="delete">
+          </form>
+        </div>
+      {% endif %}
+    </article>
+  </div>
+
+{% endblock %}}

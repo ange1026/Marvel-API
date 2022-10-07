@@ -1,0 +1,38 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+<div class="container-sm">
+    <form action="/marvel" method="POST">
+        <fieldset>
+            <legend>Create New Character</legend>
+            
+            <label class="form-label">Character: </label>
+            <input
+              class="form-control"
+              type="text"
+              name="character"
+              placeholder="enter the name of the character">
+            
+            <label class="form-label">Hero Name: </label>
+            <input
+              class="form-control"
+              type="text"
+              name="heroName"
+              placeholder="what's their hero name?">
+            
+            <label class="form-label">Alive?: </label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="readyToEat">
+        
+        </fieldset>
+        <input
+        class="btn btn-success"
+        type="submit"
+        value="Create New Fruit">
+    </form>
+</div>
+
+
+{% endblock %}
