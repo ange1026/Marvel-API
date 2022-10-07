@@ -8,6 +8,10 @@ const bcrypt = require('bcryptjs')
 const router = express.Router()
 
 // ROUTES //
+// Render route -> SIGN-UP
+router.get('/signup', (req, res) => {
+    res.render('users/signup')
+})
 
 // Route -> SIGN-UP
 router.post('/signup', async (req, res) => {
@@ -30,6 +34,10 @@ router.post('/signup', async (req, res) => {
     })
 })
 
+// Render route -> LOG-IN
+router.get('/login', (req, res) => {
+    res.render('users/login')
+})
 // Route -> LOG-IN
 router.post('/login', async (req, res) => {
     const { username, password } = req.body
