@@ -1,0 +1,53 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+    <div class="container-sm">
+        {%- comment -%} change the action {%- endcomment -%}
+        {%- comment -%} add values to input fields {%- endcomment -%}
+        {%- comment -%} add a back button {%- endcomment -%}
+        <form action="/marvel/{{marvel.id}}?_method=PUT" method="POST">
+            <fieldset>
+                <legend>Edit {{marvel.character}}</legend>
+                <label class="form-label">Character: </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="character"
+                    placeholder="enter the name of the character"
+                    value="{{ marvel.character }}"
+                >
+                <label class="form-label">Hero Name: </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="heroName"
+                    placeholder="what's their hero name?"
+                    value="{{ marvel.heroName }}"
+                >
+                <label class="form-label">Alive?: </label>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="heroAlive"
+                    {% if marvel.heroAlive %}
+                        checked
+                    {% endif %}
+                >
+                <label class="form-label">Movies: </label>
+                <input
+                    class="form-control"
+                    type="number"
+                    name="movies"
+                    placeholder="how many solo movies does the character have?"
+                    value="{{ marvel.movies }}"
+                >
+            </fieldset>
+            <input
+                class="btn btn-success"
+                type="submit"
+                value="Edit {{marvel.character}}"
+            >
+        </form>
+    </div>
+
+{% endblock %}

@@ -20,22 +20,22 @@ router.get('/', (req, res) => {
       .catch(err => console.log(err))
 })
 
-// SHOW -> GET
-router.get('/:id', (req, res) => {
-    const id = req.params.id
+// // SHOW -> GET
+// router.get('/:id', (req, res) => {
+//     const id = req.params.id
 
-    Marvel.findById(id)
-    .populate('comments.author', 'username')
-    .then(marvel => {
-        // res.json({ marvel: marvel})
-        const username = req.session.username
-        const loggedIn = req.session.loggedIn
-        const userId = req.session.userId
+//     Marvel.findById(id)
+//     .populate('comments.author', 'username')
+//     .then(marvel => {
+//         // res.json({ marvel: marvel})
+//         const username = req.session.username
+//         const loggedIn = req.session.loggedIn
+//         const userId = req.session.userId
 
-        res.render('marvel/show', { marvel, username, loggedIn, userId })
-    })
-    .catch(err => console.log(err))
-})
+//         res.render('marvel/show', { marvel, username, loggedIn, userId })
+//     })
+//     .catch(err => console.log(err))
+// })
 
 // GET for new fruit
 // renders the form to create a fruit
@@ -77,10 +77,20 @@ router.get('/mine', (req, res) => {
 
 // GET request to show the update page
 router.get("/edit/:id", (req, res) => {
-    // const username = req.session.username
-    // const loggedIn = req.session.loggedIn
-    // const userId = req.session.userId
-    res.send('edit page')
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+
+    const marvelId = req.params.id
+
+    Marvel.findById(marvelId)
+        .then(marvel => {
+            res.render('marvel/edit', { marvel, username, loggedIn, userId })
+        })
+        .catch(error => {
+            res.json(error)
+        })
+        // res.send('edit page')
 })
 
 // UPDATE -> PUT
@@ -108,6 +118,23 @@ router.delete('/:id', (req, res) => {
         res.redirect('/marvel')
     })
     .catch(err => res.json(err))
+})
+
+// SHOW -> GET
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+
+    Marvel.findById(id)
+    .populate('comments.author', 'username')
+    .then(marvel => {
+        // res.json({ marvel: marvel})
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        const userId = req.session.userId
+
+        res.render('marvel/show', { marvel, username, loggedIn, userId })
+    })
+    .catch(err => console.log(err))
 })
 
 // Export router
