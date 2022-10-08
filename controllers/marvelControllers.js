@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
         res.render('marvel/index', { marvel, username, loggedIn, userId })
       })
-      .catch(err => console.log(err))
+      .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // // SHOW -> GET
@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
         // res.status(201).json({ marvel: marvel.toObject() })
         res.redirect('/marvel')
     })
-    .catch(error => res.json(error))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 
@@ -72,7 +72,7 @@ router.get('/mine', (req, res) => {
             res.render('marvel/index', { marvel, username, loggedIn, userId })
         })
     // or throw an error if there is one
-        .catch(error => res.json(error))
+        .catch(res.redirect(`/error?error=${err}`))
 })
 
 // GET request to show the update page
@@ -87,8 +87,8 @@ router.get("/edit/:id", (req, res) => {
         .then(marvel => {
             res.render('marvel/edit', { marvel, username, loggedIn, userId })
         })
-        .catch(error => {
-            res.json(error)
+        .catch(err => {
+            res.redirect(`/error?error=${err}`)
         })
         // res.send('edit page')
 })
@@ -107,7 +107,7 @@ router.put('/:id', (req, res) => {
             res.sendStatus(401)
         }
     })
-    .catch(error => res.json(error))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // DELETE -> DELETE
@@ -117,7 +117,7 @@ router.delete('/:id', (req, res) => {
     .then(marvel => {
         res.redirect('/marvel')
     })
-    .catch(err => res.json(err))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // SHOW -> GET
@@ -134,7 +134,7 @@ router.get('/:id', (req, res) => {
 
         res.render('marvel/show', { marvel, username, loggedIn, userId })
     })
-    .catch(err => console.log(err))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // Export router

@@ -17,13 +17,31 @@ middleware(app)
 // HOME ROUTE
 app.get('/', (req, res) => {
     // res.send('Server is running')
-    res.render('index.liquid')
+    if (req.session.loggedIn) {
+        res.redirect('/fruits')
+    } else {
+        res.render('index.liquid')
+    }
 })
 
 // Register routes
 app.use('/marvel', marvelRouter)
 app.use('/comments', commentRouter)
 app.use('/users', UserRouter)
+
+// Error Page
+app.get('/error', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    const error = req.query.error || 'This page does not exist'
+
+    res.render('error.liquid', { error, username, loggedIn, userId})
+})
+
+// Catchall route -> this will redirect to the error page for anything
+// that doesn't satisfy a controller.
+app.all('*', (req, res) => {
+    res.redirect('/error')
+})
 
 // Server Listener
 const PORT = process.env.PORT
