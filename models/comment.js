@@ -1,9 +1,8 @@
 // Import Dependencies
-const { Schema } = require('mongoose')
 const mongoose = require('./connection')
 
 // Schema
-const { Squema } = mongoose
+const { Schema } = mongoose
 
 // Comment Schema
 const commentSchema = new Schema({

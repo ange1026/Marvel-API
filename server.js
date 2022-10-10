@@ -18,7 +18,7 @@ middleware(app)
 app.get('/', (req, res) => {
     // res.send('Server is running')
     if (req.session.loggedIn) {
-        res.redirect('/fruits')
+        res.redirect('/marvel')
     } else {
         res.render('index.liquid')
     }

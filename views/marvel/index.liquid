@@ -1,11 +1,11 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-
+ {% if marvel.length > 0 %}
   <div>
     <h2 class="dsiplay-6">All Characters</h2>
     <div class="row">
       {% for marvel in marvel %}
-        <div class="card">
+        <div class="card" style="width: 18rem;">
           <h5 class="card-header">{{ marvel.character }}
           </h5>
           <div class="card-body">
@@ -29,5 +29,9 @@
       {% endfor %}
     </div>
   </div>
-
+  {% else %}
+      <div>
+        <h2 class="display-6">No characters yet... time to add some!</h2>
+      </div>
+ {% endif %}
 {% endblock %}

@@ -26,7 +26,8 @@ router.post('/signup', async (req, res) => {
     User.create(req.body)
     .then(user => {
         console.log(user)
-        res.status(201).json({ username: user.username})
+        // res.status(201).json({ username: user.username})
+        res.redirect('/users/login')
     })
     .catch(err => {
         console.log(err)

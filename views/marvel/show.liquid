@@ -24,6 +24,36 @@
         </div>
       {% endif %}
     </article>
+    <hr>
+    <h4>comments</h4>
+    <hr>
+    {% if loggedIn %}
+      <div class="col-md-6">
+        <form action="/comments/{{marvel.id}}" method="POST">
+        <fieldset>
+          <legend>Add Comment</legend>
+          <label class="form-label">comment:</label>
+          <input class="form-control mb-1" type="text" placeholder="enter your comment..." name="note" required>
+        </fieldset>
+        <input class="btn btn-success" type="submit" value="add comment">
+        </form>
+      </div>
+      {% else %}
+        <div class="col-md-6">
+          <small>If you'd like to comment please log in...</small>
+        </div>
+      {% endif %}
+      <hr>
+      {% if marvel.comments.length > 0 %}
+      <div class="container-sm justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        {% for comment in marvel.comments %}
+        {% render '../comment.liquid', comment: comment, userId: userId, marvel: marvel %}
+        {% endfor %}
+      </div>
   </div>
-
+  {% else %}
+   <small>no comments yet...</small>
+   {% endif %}
+   </div>
 {% endblock %}}

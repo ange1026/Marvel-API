@@ -20,10 +20,13 @@ router.post('/:marvelId', (req, res) => {
     Marvel.findById(marvelId)
 
     .then(marvel => {
-        fruit.comments.push(req.body)
+        marvel.comments.push(req.body)
         return marvel.save()
     })
-    .catch(error => console.log(error))
+    .then (marvel => {
+        res.redirect(`/marvel/${marvel.id}`)
+    })
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 
@@ -41,16 +44,21 @@ router.delete('/delete/:marvelId/:commId', (req, res) => {
             if (theComment.author == req.session.userId) {
                 theComment.remove()
                 marvel.save()
-                res.sendStatus(204)
+                // res.sendStatus(204)
+                res.redirect(`/marvel/${marvel.id}`)
             } else {
-                res.sendStatus(401)
+                // res.sendStatus(401)
+                const err = 'you%20are%20not%20authorized%20for%20this%20action'
+                res.redirect(`/error?error=${err}`)
             }
         } else {
-            res.sendStatus(401)
+            // res.sendStatus(401)
+            const err = 'you%20are%20not%20authorized%20for%20this%20action'
+            res.redirect(`/error?error=${err}`)
         }
       })
 
-      .catch(error => console.log(error))
+      .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 module.exports = router

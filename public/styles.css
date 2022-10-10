@@ -4,5 +4,8 @@ body {
 
 .card {
     margin: 5px;
-    width: 18rem;
+}
+
+#button {
+    border-color: blueviolet;
 }
