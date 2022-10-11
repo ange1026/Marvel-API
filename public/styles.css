@@ -1,11 +1,20 @@
 body {
-    background-color: lightblue;
+    background-color: #edf2f4;
 }
 
 .card {
     margin: 5px;
 }
 
-#button {
-    border-color: blueviolet;
+.btn {
+    border-color: red;
+    background-color: white;
+    color: black;
 }
+
+.btn:hover {
+    background-color: #f4998d;
+}
+
+
+

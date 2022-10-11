@@ -72,7 +72,7 @@ router.get('/mine', (req, res) => {
             res.render('marvel/index', { marvel, username, loggedIn, userId })
         })
     // or throw an error if there is one
-        .catch(res.redirect(`/error?error=${err}`))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // GET request to show the update page
@@ -95,17 +95,22 @@ router.get("/edit/:id", (req, res) => {
 
 // UPDATE -> PUT
 router.put('/:id', (req, res) => {
+    console.log('req.body initially', req.body)
     const id = req.params.id
 
+    req.body.heroAlive = req.body.heroAlive === 'on' ? true : false
+    console.log('req.body after changing checkbox value', req.body)
     Marvel.findById(id)
     .then(marvel => {
 
         if (marvel.owner == req.session.userId) {
-            res.sendStatus(204)
             return marvel.updateOne(req.body)
         } else {
             res.sendStatus(401)
         }
+    })
+    .then(() => {
+        res.redirect(`/marvel/${id}`)
     })
     .catch(err => res.redirect(`/error?error=${err}`))
 })
