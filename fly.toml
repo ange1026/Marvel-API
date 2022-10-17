@@ -10,6 +10,7 @@ processes = []
 
 [env]
   PORT = "8080"
+  SECRET = "iDontlikeanyflavouroficeCreamThatisnotChocolatebnChocolateisSuperior!!!"
   DEPLOYED_URL = "mongodb+srv://angie:angelica10@marvelish.ahllsgt.mongodb.net/marvelheroes?retryWrites=true&w=majority"
 
 [experimental]
