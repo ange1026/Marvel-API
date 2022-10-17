@@ -1,4 +1,4 @@
-# fly.toml file generated for marvelheroes on 2022-10-17T18:20:42-04:00
+# fly.toml file generated for marvelheroes on 2022-10-17T19:10:04-04:00
 
 app = "marvelheroes"
 kill_signal = "SIGINT"
